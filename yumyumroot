@@ -1,0 +1,147 @@
+#!/usr/bin/perl
+# yumyumroot 
+#
+# $Id: yumyumroot,v 1.3 2000/08/28 17:03:40 btanaka Exp $
+
+#
+# getopts
+#
+use Getopt::Std;
+
+#$getopts("hR:r:G:g:B:b:"); # -h help
+		          # -R red max
+		          # -r red min
+		          # -G green max
+		          # -g green max
+		          # -B blue max
+		          # -b blue max
+
+getopts("ha:i:"); # -h help
+
+
+
+
+#
+# vars
+#
+#$d = 1; #debug
+$rmuh=1;
+$gmuh=1;
+$bmuh=1;
+$rincrement=int(rand(2)+1);
+$gincrement=int(rand(2)+1);
+$bincrement=int(rand(2)+1);
+
+
+
+#
+# syntax - min and max overall version
+#
+$syntax = "\nSyntax: $0 [-h] [-a n] [-i n] seconds-to-sleep\n";
+$syntax = "$syntax"."           -h   help\n";
+$syntax = "$syntax"."           -a n color mAximum (0-255)\n";
+$syntax = "$syntax"."           -i n color mInimum (0-255)\n";
+$syntax = "$syntax"."\nSeconds-to-sleep sets the number of seconds\n";
+$syntax = "$syntax"."between color changes. Try 0 for hyperactivity.\n";
+$syntax = "$syntax"."Most folks will want to run it slower, say at\n";
+$syntax = "$syntax"."1, 2, or 10 so that the changes are subtle.\n";
+$syntax = "$syntax"."\n-a and -i will set the upper and lower bounds\n";
+$syntax = "$syntax"."respectively of the RGB values. So, for instance, if\n";
+$syntax = "$syntax"."you like darker colors, try something like -a 100.\n\n";
+
+
+
+#
+# syntax - rgb min and max version
+#
+#$syntax = "Syntax: $0 [-h] [-R n] [-r n] [-G n] [-g n] [-B n] [-b n] seconds-to-sleep\n";
+#$syntax = "$syntax"."           -h   help\n";
+#$syntax = "$syntax"."           -R n red max (0-255)\n";
+#$syntax = "$syntax"."           -r n red min (0-255)\n";
+#$syntax = "$syntax"."           -G n green max (0-255)\n";
+#$syntax = "$syntax"."           -g n green min (0-255)\n";
+#$syntax = "$syntax"."           -B n blue max (0-255)\n";
+#$syntax = "$syntax"."           -b n blue min (0-255)\n";
+
+
+
+
+
+#
+# Make sure the user supplied the right number of arguments
+#
+unless(defined($ARGV[0])) { die "$syntax" };
+$sleep = "$ARGV[0]";
+print "debug>>> sleep: $sleep\n" if $d;
+
+# help
+if ( defined($opt_h) ) { die "$syntax"; }
+
+#
+# options for all min and max version
+#
+if ( $opt_a =~ m/\d+/ ) {
+    $allmax = $opt_a;
+} else {
+    $allmax = 255;
+}
+if ( $opt_i =~ m/\d+/ ) {
+    $allmin = $opt_i;
+} else {
+    $allmin = 0;
+}
+
+
+#
+# options for rgb min and max version
+#
+# red
+#if ( $opt_r =~ m/\d+/ ) {
+    #$redmin = $opt_r;
+#} else {
+    #$redmin = 0;
+#}
+#if ( $opt_R =~ m/\d+/ ) {
+    #$redmax = $opt_R;
+#} else {
+    #$redmax = 255;
+#}
+
+
+
+
+
+#
+# main
+#
+while ( 1 ) { # run all the time
+    while ( ( $rmuh < $allmax ) and ( $rmuh > $allmin ) and
+    ( $gmuh < $allmax ) and ( $gmuh > $allmin ) and
+    ( $bmuh < $allmax ) and ( $bmuh > $allmin )
+    ) {
+        print ">>> in cycle loop\n" if $d; 
+	$color=sprintf("#%.2X%.2X%.2X",$rmuh,$gmuh,$bmuh);
+	print "xsetroot -solid $color\n" if $d;
+	    system("xsetroot -solid $color");
+	sleep($sleep);
+	$rmuh+=$rincrement;
+	$gmuh+=$gincrement;
+	$bmuh+=$bincrement;
+    }
+    print ">>> leaving cycle loop\n" if $d; 
+    $rincrement=int(rand(10)+2);
+    $gincrement=int(rand(10)+2);
+    $bincrement=int(rand(10)+2);
+    if ( $rmuh > $allmax ) { $rincrement*=-1; }
+    if ( $gmuh > $allmax ) { $gincrement*=-1; }
+    if ( $bmuh > $allmax ) { $bincrement*=-1; }
+    print ">>> gincrement: $gincrement\n" if $d;
+    $rmuh+=$rincrement;
+    $gmuh+=$gincrement;
+    $bmuh+=$bincrement;
+    print ">>> rmuh: $rmuh " if $d;
+    print ">>> gmuh: $gmuh " if $d;
+    print ">>> bmuh: $bmuh\n" if $d;
+}
+
+#eof
