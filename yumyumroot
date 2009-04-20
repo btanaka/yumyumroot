@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 # yumyumroot 
-#
-# $Id: yumyumroot,v 1.3 2000/08/28 17:03:40 btanaka Exp $
 
 #
 # getopts
