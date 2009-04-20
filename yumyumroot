@@ -1,22 +1,15 @@
 #!/usr/bin/perl
 # yumyumroot 
+# Author: Brian Tanaka
+# Email: brian@briantanaka.com
+# URL: http://briantanaka.com
+
 
 #
 # getopts
 #
 use Getopt::Std;
-
-#$getopts("hR:r:G:g:B:b:"); # -h help
-		          # -R red max
-		          # -r red min
-		          # -G green max
-		          # -g green max
-		          # -B blue max
-		          # -b blue max
-
 getopts("ha:i:"); # -h help
-
-
 
 
 #
@@ -29,7 +22,6 @@ $bmuh=1;
 $rincrement=int(rand(2)+1);
 $gincrement=int(rand(2)+1);
 $bincrement=int(rand(2)+1);
-
 
 
 #
@@ -48,23 +40,6 @@ $syntax = "$syntax"."respectively of the RGB values. So, for instance, if\n";
 $syntax = "$syntax"."you like darker colors, try something like -a 100.\n\n";
 
 
-
-#
-# syntax - rgb min and max version
-#
-#$syntax = "Syntax: $0 [-h] [-R n] [-r n] [-G n] [-g n] [-B n] [-b n] seconds-to-sleep\n";
-#$syntax = "$syntax"."           -h   help\n";
-#$syntax = "$syntax"."           -R n red max (0-255)\n";
-#$syntax = "$syntax"."           -r n red min (0-255)\n";
-#$syntax = "$syntax"."           -G n green max (0-255)\n";
-#$syntax = "$syntax"."           -g n green min (0-255)\n";
-#$syntax = "$syntax"."           -B n blue max (0-255)\n";
-#$syntax = "$syntax"."           -b n blue min (0-255)\n";
-
-
-
-
-
 #
 # Make sure the user supplied the right number of arguments
 #
@@ -74,6 +49,7 @@ print "debug>>> sleep: $sleep\n" if $d;
 
 # help
 if ( defined($opt_h) ) { die "$syntax"; }
+
 
 #
 # options for all min and max version
@@ -88,25 +64,6 @@ if ( $opt_i =~ m/\d+/ ) {
 } else {
     $allmin = 0;
 }
-
-
-#
-# options for rgb min and max version
-#
-# red
-#if ( $opt_r =~ m/\d+/ ) {
-    #$redmin = $opt_r;
-#} else {
-    #$redmin = 0;
-#}
-#if ( $opt_R =~ m/\d+/ ) {
-    #$redmax = $opt_R;
-#} else {
-    #$redmax = 255;
-#}
-
-
-
 
 
 #
