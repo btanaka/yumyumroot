@@ -5,4 +5,16 @@ it. You like it already.
 The idea for YumYumRoot was stolen by me, Brian Tanaka, from
 Bob Mende at SGI, lo these many years ago.
 
+Syntax: yumyumroot [-h] [-a n] [-i n] seconds-to-sleep
+           -h   help
+           -a n color mAximum (0-255)
+           -i n color mInimum (0-255)
 
+Seconds-to-sleep sets the number of seconds
+between color changes. Try 0 for hyperactivity.
+Most folks will want to run it slower, say at
+1, 2, or 10 so that the changes are subtle.
+
+-a and -i will set the upper and lower bounds
+respectively of the RGB values. So, for instance, if
+you like darker colors, try something like -a 100.
